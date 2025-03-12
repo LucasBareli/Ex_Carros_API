@@ -9,3 +9,11 @@ class Carro(BaseModel):
     ano: int
     preco: float
     imagem: str
+
+class CarroAtualizado(Carro):
+    id: Optional[int] = None
+    marca: str
+    modelo: str
+    ano: int
+    preco: Optional[float] = None
+    imagem: Optional[str] = None

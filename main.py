@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status, Depends
-from model import Carro
+from model import Carro, CarroAtualizado
 from typing import Optional, Any
 
 app = FastAPI(title="API de Carros", version="1.0", description="Gerenciamento de Carros")
@@ -66,7 +66,16 @@ async def put_carro(carro_id: int, carro: Carro):
         return carros_db[carro_id]
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Não existe carro com o ID {carro_id}")
-
+    
+@app.patch("/carros/{carro_id}", status_code=status.HTTP_202_ACCEPTED, description="Atualiza os dados de um carro existente")
+async def put_carro_parcial(carro_id: int, carro:CarroAtualizado):
+    if carro_id in carros_db:
+        carros_db[carro_id].update(carro.dict(exclude_unset=True))
+        carros_db[carro_id].pop("id", None)
+        return carros_db[carro_id]
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Não existe carro com o ID {carro_id}")
+        
 @app.delete("/carros/{carro_id}", status_code=status.HTTP_204_NO_CONTENT, description="Exclui um carro pelo ID")
 async def delete_carro(carro_id: int):
     if carro_id in carros_db:
