@@ -86,4 +86,6 @@ async def delete_carro(carro_id: int):
 # Código para rodar o servidor
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="info", reload=True)
+    uvicorn.run("main:app", host="127.0.0.1:8000", port=8000, log_level="info", reload=True)
+    #uvicorn.run("main:app", host="10.234.91.150", port=8000, log_level="info", reload=True) #IP DO PC
+    #uvicorn.run("main:app", host="10.21.58.8", port=8000, log_level="info", reload=True) #IP DO PC COM CABO
